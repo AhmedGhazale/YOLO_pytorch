@@ -16,7 +16,7 @@ clone and install the requirements
 ```bash
 git clone https://github.com/AhmedGhazale/cifar100-classifier.git
 cd cifar100-classifier
-pip3 install requirements.txt
+pip3 install -r requirements.txt
 ```
 ### Demo :
 **to run an image**
