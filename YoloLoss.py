@@ -73,7 +73,7 @@ class yoloLoss(nn.Module):
         noo_target = target_tensor[noo_mask].view(-1, 30)
         noo_pred_mask = torch.cuda.ByteTensor(noo_pred.size())
         noo_pred_mask.zero_()
-        noo_pred_mask[:, 4] = 1;
+        noo_pred_mask[:, 4] = 1
         noo_pred_mask[:, 9] = 1
         noo_pred_c = noo_pred[noo_pred_mask]  # noo pred只需要计算 c 的损失 size[-1,2]
         noo_target_c = noo_target[noo_pred_mask]
@@ -127,8 +127,6 @@ class yoloLoss(nn.Module):
         # 3.class loss
         class_loss = F.mse_loss(class_pred, class_target, size_average=False)
 
-        return (self.l_coord * loc_loss + 2 * contain_loss + not_contain_loss + self.l_noobj * nooobj_loss + class_loss) / N
-
-
+        return (self.l_coord * loc_loss + 2 * contain_loss + not_contain_loss + self.l_noobj * nooobj_loss + class_loss) / N,loc_loss
 
 
