@@ -2,12 +2,11 @@ import torch
 import numpy as np
 import numba
 
-@numba.jit(forceobj=True)
-def post_processing(out, det_threshold = .2, nms_threshold = .5 , s= 14, b=2, classes_num=20):
+#@numba.njit()
+def post_processing(out, det_threshold = .1, nms_threshold = .8 , s= 14, b=2, classes_num=20):
     boxes = []
     conf = []
     classes_index = []
-    print(out.shape)
     for i in range(s):
         for j in range(s):
             for k in range(b):
@@ -33,16 +32,15 @@ def post_processing(out, det_threshold = .2, nms_threshold = .5 , s= 14, b=2, cl
     classes_index = classes_index[chosen]
     conf = conf[chosen]
   
-    if len(boxes) ==0:
-        boxes = np.zeros((1,4))
-        conf = np.zeros(1)
-        classes_index = np.zeros(1)
+
 
     keep = nms(boxes,conf,nms_threshold)
+    #return boxes,classes_index,conf
+    import ipdb;ipdb.set_trace()
     return boxes[keep],classes_index[keep],conf[keep]
-
+    
   
-@numba.jit(forceobj=True)
+#@numba.njit()
 def nms(dets, scores, thresh=.5):
     '''
     dets is a numpy array : num_dets, 4
@@ -74,3 +72,35 @@ def nms(dets, scores, thresh=.5):
         order = order[inds + 1]
 
     return keep
+
+
+
+
+@numba.njit()
+def post_processing_test(out, det_threshold = .2, nms_threshold = .5 , s= 14, b=2, classes_num=20):
+    bboxes = []
+    conf = []
+    classes_index = []
+    for i in range(s):
+        for j in range(s):
+            for k in range(b):
+                bboxes.append([(out[i][j][k*5+0]+j)/s,(out[i][j][k*5+1]+i)/s,out[i][j][k*5+2], out[i][j][k*5+3]])
+                conf.append(out[i][j][k*5+4]*np.max(out[i][j][b*5+1:]))
+                classes_index.append(np.argmax(out[i][j][b*5:]))
+
+
+    bboxes = np.array(bboxes)
+    return bboxes
+
+
+
+if __name__ == '__main__':
+    print(numba.__version__)
+    out = np.ones( [16,16,30] )    
+    from tqdm import tqdm
+    for i in tqdm(range(1000)):
+        o = post_processing(out )
+
+
+
+

@@ -22,20 +22,22 @@ CLASSES = ['aeroplane', #0
            'train',     #18
            'tvmonitor'] #19
 IMAGE_SIZE = 448
-DATASET_PATH = '/home/ahmed/PycharmProjects/yolo1/voc/VOCdevkit/'
+DATASET_PATH = '/home/ahmed/project/YOLO_pytorch/voc/VOCdevkit/VOC2012'
 
 # model parameters
 
 GRID_SIZE = 14
-BASE_MODEL = 'mobilenet_v2'
+BASE_MODEL = 'resnet50'
 BOXES_PER_CELL = 2
 
 # training parameters
 
-BATCH_SIZE = 8
-EPOCHS = 50
+BATCH_SIZE = 16
+EPOCHS = 18
 LEARNING_RATE = .001
+SAVE_DIR = 'models2'
 
 # predict parameters
-MODEL_PATH = 'models/mobilenet_v2.pth'
+
+MODEL_PATH = 'models2/resnet50.pth'
 

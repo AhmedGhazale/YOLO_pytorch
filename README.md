@@ -4,7 +4,6 @@
 this is an implementation of YOLO object detection algorithme.
 the implementation is a mix between YOLO v1 and v2.
 I used pytorch models trained on ImageNet as backbone model then added final conv layer for the output  **THERE IS NO FULLY CONNECTED LAYERS**   
-**NOTE** I used YOLO loss function implementation from [this repo](https://github.com/xiongzihua/pytorch-YOLO-v1)
 ### Dependencies:
 * torch==1.3.1
 * torchvision==0.4.2

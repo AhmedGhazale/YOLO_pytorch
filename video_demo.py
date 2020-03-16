@@ -8,7 +8,7 @@ import cv2
 import configs as cfg
 import sys
 from predict import *
-
+from tqdm import tqdm
 
 def main():
 
@@ -18,8 +18,10 @@ def main():
 
     ret, frame = video.read()
     out = cv2.VideoWriter('output.avi',cv2.VideoWriter_fourcc('M','J','P','G'), 30, (frame.shape[1],frame.shape[0]))
+    frames_count = int(out.get(cv2.CAP_PROP_FRAME_COUNT))
+    print(frames_count)
     #while ret:
-    for i in range(200):
+    for i in tqdm(range(1000)):
         result = predict(frame ,model)
 
         for left_up, right_bottom, class_name, prob in result:
@@ -33,7 +35,6 @@ def main():
         
         out.write(frame)
         ret, frame = video.read()
-        print(1)
     out.release()
 if __name__ == '__main__':
 	main()

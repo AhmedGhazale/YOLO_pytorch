@@ -35,7 +35,7 @@ def predict(img_org,model):
         out = model(img)
         out = out.cpu().numpy()[0]
     boxes, cls, score = post_processing(out)
-    print(boxes)
+
 
     for i, box in enumerate(boxes):
         x1 = int(box[0] * w)
@@ -53,6 +53,8 @@ def main():
   
   model = torch.load(cfg.MODEL_PATH)
   image_name =  sys.argv[1]
+  #image_name = 'me.jpg'
+
   image = cv2.imread(image_name)
   result = predict(image ,model)
 

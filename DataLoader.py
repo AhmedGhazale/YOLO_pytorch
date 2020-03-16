@@ -6,7 +6,7 @@ import collections
 import cv2
 from albumentations.pytorch import ToTensorV2
 import torch
-from utils import decode
+from utils import post_processing
 import configs as cfg
 import albumentations as  A
 import numpy as np
@@ -186,7 +186,7 @@ def main():
     for i in range(1000):
         image,out = voc[i]
 
-        boxes = decode(out)
+        boxes = post_processing(out)
         im_size = image.shape[0]
         for det in boxes:
             pt1 = (det[0]-det[2]/2  , det[1]-det[3]/2 )
