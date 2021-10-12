@@ -1,6 +1,6 @@
 torch
 torchvision
-opencv-python==4.1.2.30
+opencv-python==4.2.0.32
 albumentations==0.4.3
 numba
 
